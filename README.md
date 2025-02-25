@@ -1,10 +1,10 @@
-## PeoPle의 특징
+## PeoPle
 
 PeoPle은 여러 사람이 참가하는 연애형식의 게임입니다. 당신을 닮은 분신을 웹에 생성하여 생활시킵니다. 한번 생성한 주민은 이후 자율적으로 다른 주민과 연애를 합니다. 주민은 자신이 좋아하는 사람에게 접근하여 애인이 되려고 합니다. 때로는 싸우거나, 헤어지거나, 데이트하거나, 선물을 주고받거나, 죽거나, 결혼하여 자녀를 낳기도 합니다. 또한 일을 통해 수입을 얻어 그 돈으로 애완동물을 기르거나 아이템(재산)을 구매할 수 있습니다.
 
 PeoPle is a dating-style game where multiple people participate. You create an avatar that resembles you on the web and let it live. Once created, the residents autonomously interact and date other residents. Residents approach people they like and try to become their partners. Sometimes they fight, break up, go on dates, exchange gifts, die, get married, and have children. They can also earn income through work and use that money to raise pets or buy items (assets).
 
-## 파일 설명
+## 파일 설명 / File Description
 
 - `people.cgi` : PeoPle본체의 CGI입니다. / The main CGI of PeoPle.
 - `new.cgi` : PeoPle의 서브프로그램 / A subprogram of PeoPle.
@@ -24,7 +24,7 @@ PeoPle is a dating-style game where multiple people participate. You create an a
 - `img폴더` : 이미지 파일이 들어있습니다. / Contains image files.
 - `index.html` : 더미용 HTML파일 / Dummy HTML file.
 
-## 퍼미션 설정
+## 퍼미션 설정 / Permission Setting
 
 FTP소프트등을 이용해 파일의 퍼미션을 변경해주세요.
 Please change the file permissions using FTP software, etc.
@@ -37,7 +37,7 @@ Please change the file permissions using FTP software, etc.
 - `모든dat` : 666(or 606)
   ※ 보관하는 폴더는 777(또는 707)로 해주세요(유저데이터 포함) / The folder where these files are stored should be set to 777 (or 707) (including user data).
 
-## 디렉토리 구성
+## 디렉토리 구성 / Directory Layout
 
 디렉토리의 샘플배열입니다.
 Sample directory layout:
@@ -71,7 +71,7 @@ Sample directory layout:
 
 3. 이미지는 하나로 묶어 임의의 폴더 안에 넣어주세요. 이미지 폴더를 두는 위치는 어디든 상관없습니다. 또한 폴더명도 임의로 지정해도 괜찮습니다. / Put the images in one folder. The location of the image folder does not matter. You can also specify the folder name arbitrarily.
 
-## 프로그램의 수정
+## 프로그램의 수정 / Modification of the Program
 
 people.cgi, admin.cgi는 이대로 사용할 수 없습니다. 각 프로바이더나 디렉토리 구성에 따라 변경할 필요가 있습니다. people.cgi, admin.cgi를 텍스트 문자편집기 등으로 열어, 이하의 개소를 변경해주세요.
 ※ lovers.cgi와 new.cgi는 변경할 필요가 없습니다.
