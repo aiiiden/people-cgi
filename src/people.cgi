@@ -1,4 +1,8 @@
-#!/usr/local/bin/perl
+#!/usr/bin/perl
+
+use utf8;  # Perl 내부에서 UTF-8 지원
+binmode(STDOUT, ":encoding(EUC-KR)");  # 출력 인코딩을 EUC-KR로 설정
+
 
 # ↑서버에 맞게 변경해 주세요.
 # 보통 (#!/usr/local/bin/perl) 또는 (#!/usr/bin/perl)
@@ -26,7 +30,7 @@
 # 변경한 이름과 같은 이름의 디렉토리를 people.cgi와 같은 장소에 작성
 # 퍼미션은 777 또는 707로 합니다. (주 : 디렉토리=폴더)
 
-$usrdir  = 'userdata';    # 주의：주소는 아니고 디렉토리명만
+$usrdir  = '/var/www/html/user';    # 주의：주소는 아니고 디렉토리명만
 
 # ↓PeoPle에서 사용하는 모든 그림을 보관하는 디렉토리 입니다.
 # 절대주소(http://로 시작되는 주소)도 상대주소도 상관없습니다.
@@ -35,17 +39,17 @@ $usrdir  = 'userdata';    # 주의：주소는 아니고 디렉토리명만
 # 두는 것을 금지하고 있는 경우가 있습니다. 그런 경우에는 cgi-bin보다
 # 위쪽에 그림 디렉토리를 배치하고 주소를 변경해 주세요.
 
-$img     = './img';       # 주의：마지막에 슬레쉬(/)를 붙이지 말아주세요.
+$img     = '/img';       # 주의：마지막에 슬레쉬(/)를 붙이지 말아주세요.
 
 $hom_url = 'http://';     # 돌아올 홈의URL
 $hom_tgt = '_self';       # 돌아올 홈의 타겟(톱='_top',자신='_self',신규='_blank')
 $hom_lbl = '홈';          # 돌아올 홈의 라벨
 $def_ho  = 1;             # 돌아올 홈의 버튼을 표시한다(yes = 1,no = 0)
 
-$lockkey = 2;             # 파일의 락(rmdir = 1,symlink = 2,no = 0)
+$lockkey = 1;             # 파일의 락(rmdir = 1,symlink = 2,no = 0)
                           # symlink가 잘되지 않는 경우엔 rmdir을 사용해 주세요.
 
-$adps     = '0000';       # 관리자 패스워드(변경필수)
+$adps     = '1234';       # 관리자 패스워드(변경필수)
 
 $title    = 'PeoPle';     # 타이틀명(브라우저 위쪽에 표시)
 $body     = '<body bgcolor=#FFFFFF text=#000000>';    # 보디 태그
@@ -159,24 +163,22 @@ $def_nw   = '이제 막 태어났습니다'; # 시작시의 상태
 # ############################ 응용설정 ############################
 # 이하의 항목은 보통 변경 불필요
 
-# 일본어코드 jcode.pl의 URL(보통 변경 불필요)
-require 'jcode.pl';
-
 # ---------- FILE PASS
 $cgiurl  = './people.cgi'; # people.cgi의 주소(보통 변경 불필요) 755(705)
 $newcgi  = './new.cgi';    # new.cgi의 주소   (보통 변경 불필요) 644
 $luvcgi  = './lovers.cgi'; # lovers.cgi의 주소(보통 변경 불필요) 644
-$jobdat  = './job.dat';    # job.dat의 주소 666(606)
-$itmdat  = './itm.dat';    # itm.dat의 주소 666(606)
-$chddat  = './chd.dat';    # chd.dat의 주소 666(606)
-$elsdat  = './els.dat';    # els.dat의 주소 666(606)
-$dtedat  = './dte.dat';    # dte.dat의 주소 666(606)
-$pztdat  = './pzt.dat';    # pzt.dat의 주소 666(606)
-$petdat  = './pet.dat';    # pet.dat의 주소 666(606)
-$htpdat  = './htp.dat';    # htp.dat의 주소 666(606)
-$vtidat  = './vti.dat';    # vti.dat의 주소 666(606)
-$vtddat  = './vtd.dat';    # vtd.dat의 주소 666(606)
-$nwsdat  = './nws.dat';    # nws.dat의 주소 666(606)
+
+$jobdat  = '/var/www/html/dat/job.dat';
+$itmdat  = '/var/www/html/dat/itm.dat';
+$chddat  = '/var/www/html/dat/chd.dat';
+$elsdat  = '/var/www/html/dat/els.dat';
+$dtedat  = '/var/www/html/dat/dte.dat';
+$pztdat  = '/var/www/html/dat/pzt.dat';
+$petdat  = '/var/www/html/dat/pet.dat';
+$htpdat  = '/var/www/html/dat/htp.dat';
+$vtidat  = '/var/www/html/dat/vti.dat';
+$vtddat  = '/var/www/html/dat/vtd.dat';
+$nwsdat  = '/var/www/html/dat/nws.dat';
 
 $lockfile= './ppllock';    # 락파일명
 
@@ -284,8 +286,16 @@ if ($F{'mode'} eq 'new_regist'   ||
     $F{'mode'} eq 'info_virtue'  ||
     $F{'mode'} eq 'select_icon'  ||
     $F{'mode'} eq 'set_icon'     ||
-    $F{'mode'} eq 'set_virtue') { require $newcgi }
-&lock;
+    $F{'mode'} eq 'set_virtue') {
+
+    open(my $fh, "<:encoding(EUC-KR)", $newcgi) or die "Cannot open $newcgi: $!";
+    my $code = do { local $/; <$fh> };
+    close($fh);
+    
+    eval $code;
+    die "Error loading $newcgi: $@" if $@;
+}
+
 if (!$F{'mode'})                { &start_view     }
 else                            { &{$F{'mode'}}   }
 &unlock;

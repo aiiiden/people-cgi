@@ -1,3 +1,9 @@
+use utf8;
+use Encode;
+binmode(STDOUT, ":utf8");   # 표준 출력은 UTF-8로 설정
+binmode(STDIN, ":utf8");    # 표준 입력도 UTF-8로 설정
+
+
 # ##################################################################
 # PeoPle(new.cgi)
 #    $ver = '1.6';
